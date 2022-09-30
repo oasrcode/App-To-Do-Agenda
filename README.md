@@ -49,3 +49,7 @@ En la parte frontend
 ionic serve
 
 ```
+
+## Postman
+
+Enlace a postman -> 
