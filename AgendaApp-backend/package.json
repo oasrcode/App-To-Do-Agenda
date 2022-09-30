@@ -1,5 +1,5 @@
 {
-  "name": "agenda-backend",
+  "name": "ToDO/agenda-backend",
   "version": "1.0.0",
   "description": "backend de la aplicacion de agenda",
   "main": "index.js",
