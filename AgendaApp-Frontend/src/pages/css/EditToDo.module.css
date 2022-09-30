@@ -1,0 +1,12 @@
+
+.DateTime{
+    color: black;
+}
+.BtnDiv{
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+.BtnAdd{
+    width: 45%;
+}

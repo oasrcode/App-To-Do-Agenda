@@ -1,0 +1,7 @@
+{
+  "name": "AgendaApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
