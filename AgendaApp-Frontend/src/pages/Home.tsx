@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonPage,IonRefresher,IonRefresherContent,IonRow, IonSplitPane, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter} from "@ionic/react";
+import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage,IonRefresher,IonRefresherContent,IonRow, IonSplitPane, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter} from "@ionic/react";
 import {  useState } from "react";
 import { getAllToDo } from "../Service/getAllToDo";
 import { add, chevronDownCircleOutline,} from 'ionicons/icons';
@@ -15,18 +15,18 @@ export  function Home() {
 
   const [toDos,setToDos] = useState<ToDo[]>([]);
 
- 
-  function doRefresh(event: CustomEvent<RefresherEventDetail>) {
-    
-    console.log('Begin async operation');
-    
+ //Llama a la api si usa el IonRefresher
+  function doRefresh(event: CustomEvent<RefresherEventDetail>) { 
     getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
-  
     setTimeout(() => {
-      console.log('Async operation has ended');
       event.detail.complete();
     }, 1000);
   }
+
+  //LLama a la api cuando se crea el componente
+ useIonViewWillEnter(()=>{
+  getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
+ })
 
   return (
     <IonPage >
@@ -37,14 +37,13 @@ export  function Home() {
         </IonHeader>
         <IonContent fullscreen={true} color="light">
 
-        
         <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
           <IonRefresherContent className={style.RefresherContent} pullingIcon={chevronDownCircleOutline}
-          pullingText="Pull to refresh"
+          pullingText="Desliza para cargar" color="black"
           refreshingSpinner="circles"
-          refreshingText="Refreshing..."></IonRefresherContent>
+          refreshingText="cargando..."></IonRefresherContent>
         </IonRefresher>
-          
+        
           <IonFab vertical="bottom" horizontal="end" slot="fixed">
                   <IonFabButton routerLink="/addToDo" routerDirection="forward" color="tertiary">
                     <IonIcon icon={add} />
