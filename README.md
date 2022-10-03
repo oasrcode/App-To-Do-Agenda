@@ -33,6 +33,14 @@ cd existing_folder
 git clone [LINK DEL REPOSITORIO]
 
 ```
+## Instalar node_module del backend
+
+En la carpeta del backend escribimos por terminal
+
+```bash
+npm install
+
+```
 
 ## Ejecución
 
