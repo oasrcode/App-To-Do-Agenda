@@ -41,6 +41,15 @@ En la carpeta del backend escribimos por terminal
 npm install
 
 ```
+## Instalar node_module del frontent
+
+En la carpeta del frontend escribimos por terminal
+
+```bash
+ionic serve
+
+```
+y cuando nos pregunte si queremos instalar los scripts le escribimos 'y' y enter.
 
 ## Ejecución
 
