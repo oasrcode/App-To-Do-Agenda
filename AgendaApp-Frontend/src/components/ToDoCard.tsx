@@ -1,4 +1,4 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonImg, IonItem, IonLabel } from "@ionic/react";
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon, IonImg, IonItem, IonLabel, useIonAlert } from "@ionic/react";
 import imgHobby from "../images/hobby.jpg";
 import imgTask from "../images/task.jpg";
 import imgRest from "../images/resting.jpg";
@@ -7,12 +7,19 @@ import { ToDo } from "../data/ToDoContext";
 import { createOutline } from "ionicons/icons";
 import { trashBin } from "ionicons/icons";
 import { deleteToDo } from "../Service/deleteTodo";
+import { useHistory } from "react-router";
 
 
 
-export function ToDoCard({element}:{element:ToDo},{delete:any}:{delete:any}){
+export function ToDoCard({element}:{element:ToDo}){
 
   let img;
+
+  const history = useHistory()
+
+  const [presentAlert] = useIonAlert();
+
+  
   switch (element.type) {
       case "task":
       img=imgTask;
@@ -32,8 +39,27 @@ export function ToDoCard({element}:{element:ToDo},{delete:any}:{delete:any}){
     function deleteElement(){
       let id:string = element.id as string;
       deleteToDo({id})
+      history.push("/")//trick to reload com
     }
 
+
+    function Alert(){
+      return(presentAlert({
+        header: '¿Estás seguro?',
+        buttons: 
+        [
+          {
+          text: 'Cancel',
+          role: 'cancel',
+          },
+          {
+            text: 'Ok',
+            role: 'confirm',
+            handler:deleteElement
+          }
+        ],
+      }))
+  }
 
 
     new Date(element.time).getFullYear();
@@ -50,7 +76,7 @@ export function ToDoCard({element}:{element:ToDo},{delete:any}:{delete:any}){
     return( 
     <IonCard className={style.Card}>
          <div className={style.btns}>
-         <IonItem className={style.BtnDelete} onClick={()=>{deleteElement()}} lines="none"><IonIcon color="danger" icon={trashBin} /></IonItem>
+         <IonItem className={style.BtnDelete} onClick={()=>{Alert()}} lines="none"><IonIcon color="danger" icon={trashBin} /></IonItem>
          <IonItem className={style.BtnEdit} routerLink={"EditTodo/"+element.id} routerDirection="forward" lines="none"><IonIcon className={style.btnEdit} color="warning" icon={createOutline}/></IonItem>
          </div>
         <IonImg src={img} className={style.Img}/>      

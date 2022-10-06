@@ -6,14 +6,13 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonList, 
 
-    IonModal, IonPage, IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter, useIonViewWillLeave } 
+    IonModal, IonPage, IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter } 
     from "@ionic/react";
 
 
 import { useRef, useState }  from "react";
 import { useParams } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
-import { getAllToDo } from "../Service/getAllToDo";
 import { getByIdToDo } from "../Service/getByIdToDo";
 import { putToDo } from "../Service/putToDo";
 import style from "./css/EditToDo.module.css"
@@ -32,10 +31,7 @@ export  function EditToDo() {
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
 
-    //call api when go back to home page to fetch news changes from the database
-    useIonViewWillLeave(()=>{ getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});});
   
-    //call api when enter
     useIonViewWillEnter(()=>{ getByIdToDo({id}).then(response => response.json()).then((result)=>{setToDos(result)});});
     
    

@@ -22,6 +22,8 @@ export  function Home() {
     getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
   })
 
+  
+
  
   return (
     <IonPage >
@@ -45,7 +47,7 @@ export  function Home() {
                     toDos.map
                     ((e:ToDo,key:any)=>
                       {
-                       return <ToDoCard ion-align-self-center  key={key} element={e} />
+                       return <ToDoCard ion-align-self-center  key={key} element={e}  />
                       }
                     )
                   }

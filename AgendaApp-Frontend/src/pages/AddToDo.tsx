@@ -20,11 +20,15 @@ import style from "./css/AddToDo.module.css"
 export  function AddToDo() {
 
     const [presentAlert] = useIonAlert();
+    
    
     const typeInput = useRef<HTMLIonSelectElement>(null);
     const titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
+
+
+     
 
     function CreateTodo(){
         let title  = titleInput.current?.value as string;
@@ -44,14 +48,15 @@ export  function AddToDo() {
           
           
            
-           let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
+        let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
            
-            postToDo(element).then(response => response.json()) 
-            .then(json => console.log(json))
-            .catch(err => console.log(err))
+        postToDo(element).then(response => response.json()) 
+        .then(json => console.log(json))
+        .catch(err => console.log(err))
             
-            AlertDone();
+        AlertDone();
         }
+
 
     }
 
@@ -69,9 +74,7 @@ export  function AddToDo() {
           }))
     }
 
-    
 
-   
     return (
         <IonPage>
             <IonHeader>
