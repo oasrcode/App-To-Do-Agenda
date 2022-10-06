@@ -6,13 +6,14 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonList, 
 
-    IonModal, IonPage, IonPopover, IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert } 
+    IonModal, IonPage, IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter, useIonViewWillLeave } 
     from "@ionic/react";
 
 
-import { useEffect, useRef, useState }  from "react";
+import { useRef, useState }  from "react";
 import { useParams } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
+import { getAllToDo } from "../Service/getAllToDo";
 import { getByIdToDo } from "../Service/getByIdToDo";
 import { putToDo } from "../Service/putToDo";
 import style from "./css/EditToDo.module.css"
@@ -23,8 +24,7 @@ export  function EditToDo() {
 
     
     let {id}:{id:string} = useParams();
-
-     
+    const [toDos,setToDos] = useState<ToDo>(); 
     const [presentAlert] = useIonAlert();
    
     const typeInput = useRef<HTMLIonSelectElement>(null);
@@ -32,17 +32,13 @@ export  function EditToDo() {
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
 
- 
-
-    const [toDos,setToDos] = useState<ToDo>();
+    //call api when go back to home page to fetch news changes from the database
+    useIonViewWillLeave(()=>{ getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});});
   
-    useEffect(()=>{
-    getByIdToDo({id})
-    .then(response => response.json())
-    .then((result)=>{
-      setToDos(result) 
-    })
-    },[]);
+    //call api when enter
+    useIonViewWillEnter(()=>{ getByIdToDo({id}).then(response => response.json()).then((result)=>{setToDos(result)});});
+    
+   
     
 
     function UpdateToDo(){
@@ -66,7 +62,9 @@ export  function EditToDo() {
         putToDo(element).then(response => response.json()) 
         .then(json => console.log(json))
         .catch(err => console.log(err))
-          
+        
+        AlertDone()
+
         }
 
     }
@@ -74,6 +72,13 @@ export  function EditToDo() {
     function Alert(componente:string){
         return(presentAlert({
             header: 'Rellena '+ componente,
+            buttons: ['OK'],
+          }))
+    }
+    
+    function AlertDone(){
+        return(presentAlert({
+            header: 'Editado!!!',
             buttons: ['OK'],
           }))
     }
@@ -119,9 +124,9 @@ export  function EditToDo() {
                 </IonItem>
                 <div className={style.BtnDiv}>
                 <IonButton  size={"large"}  shape={"round"}  id="click-trigger" onClick={UpdateToDo} className={style.BtnAdd}>Modificar</IonButton> 
-                </div>
-                                
+                </div>               
             </IonContent>
         </IonPage>
       )
-}
+    }
+

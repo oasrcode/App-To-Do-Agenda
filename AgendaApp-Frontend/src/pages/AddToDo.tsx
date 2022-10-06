@@ -6,7 +6,7 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonList, 
 
-    IonModal, IonPage, IonPopover, IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert} 
+    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert} 
     from "@ionic/react";
 
 
@@ -49,7 +49,8 @@ export  function AddToDo() {
             postToDo(element).then(response => response.json()) 
             .then(json => console.log(json))
             .catch(err => console.log(err))
-          
+            
+            AlertDone();
         }
 
     }
@@ -57,6 +58,13 @@ export  function AddToDo() {
     function Alert(componente:string){
         return(presentAlert({
             header: 'Rellena '+ componente,
+            buttons: ['OK'],
+          }))
+    }
+
+    function AlertDone(){
+        return(presentAlert({
+            header: 'Añadido a la agenda',
             buttons: ['OK'],
           }))
     }

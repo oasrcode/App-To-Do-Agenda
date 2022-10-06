@@ -1,7 +1,7 @@
 import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage,IonRefresher,IonRefresherContent,IonRow, IonSplitPane, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter} from "@ionic/react";
 import {  useState } from "react";
 import { getAllToDo } from "../Service/getAllToDo";
-import { add, chevronDownCircleOutline,} from 'ionicons/icons';
+import { add} from 'ionicons/icons';
 import { ToDo } from "../data/ToDoContext";
 import { ToDoCard } from "../components/ToDoCard"
 import  style  from "./css/Home.module.css"
@@ -15,19 +15,14 @@ export  function Home() {
 
   const [toDos,setToDos] = useState<ToDo[]>([]);
 
- //Llama a la api si usa el IonRefresher
-  function doRefresh(event: CustomEvent<RefresherEventDetail>) { 
+ 
+
+  
+  useIonViewWillEnter(()=>{
     getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
-    setTimeout(() => {
-      event.detail.complete();
-    }, 1000);
-  }
+  })
 
-  //LLama a la api cuando se crea el componente
- useIonViewWillEnter(()=>{
-  getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
- })
-
+ 
   return (
     <IonPage >
         <IonHeader>
@@ -37,14 +32,8 @@ export  function Home() {
         </IonHeader>
         <IonContent fullscreen={true} color="light">
 
-        <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-          <IonRefresherContent className={style.RefresherContent} pullingIcon={chevronDownCircleOutline}
-          pullingText="Desliza para cargar" color="black"
-          refreshingSpinner="circles"
-          refreshingText="cargando..."></IonRefresherContent>
-        </IonRefresher>
-        
-          <IonFab vertical="bottom" horizontal="end" slot="fixed">
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
                   <IonFabButton routerLink="/addToDo" routerDirection="forward" color="tertiary">
                     <IonIcon icon={add} />
                   </IonFabButton>
@@ -62,13 +51,8 @@ export  function Home() {
                   }
                 </IonCol> 
               </IonRow>
-            </IonGrid>
-          
-          
-              
+            </IonGrid> 
         </IonContent>
-        
-       
     </IonPage>
 
   )
