@@ -73,9 +73,9 @@ Enlace a postman -> [documentación](https://www.postman.com/restless-firefly-22
 
 ## Manual de uso
 
- *La aplicación arranca en el menu principal donde carga el contenido de la agenda.
- *Dicha pantalla llama a la api al iniciarse y rellana la pantalal de tarjetas con el contenido de la ajenda.
- *Las tarjetas tienen 2 botones el de editar, a la derecha, y eliminar a la izquierda.
+ *[]La aplicación arranca en el menu principal donde carga el contenido de la agenda.
+ *[]Dicha pantalla llama a la api al iniciarse y rellana la pantalal de tarjetas con el contenido de la ajenda.
+ *[]Las tarjetas tienen 2 botones el de editar, a la derecha, y eliminar a la izquierda.
  *Al eliminar una tarjeta hay que refrescar la pantalla, deslizandola hacia abajo.
  *Por último, en la esquina inferier derecha tenemos el botón para añadir contenido a nuestra ajenda.Nos llevará 
  a una nueva pagía donde debemos rellenar todo los campos, luego solo debemos hacer clic en volver.
