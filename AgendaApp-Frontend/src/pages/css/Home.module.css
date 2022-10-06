@@ -1,7 +1,6 @@
 .Main{
     display: flex;
     align-items: center;
-    padding-top: 55px;
     justify-content: center;
 }
 .RefresherContent{

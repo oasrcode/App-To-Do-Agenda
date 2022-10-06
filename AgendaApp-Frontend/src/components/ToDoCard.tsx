@@ -39,7 +39,8 @@ export function ToDoCard({element}:{element:ToDo}){
     function deleteElement(){
       let id:string = element.id as string;
       deleteToDo({id})
-      history.push("/")//trick to reload com
+      history.go(0)//trick to reload com
+      
     }
 
 
@@ -77,7 +78,7 @@ export function ToDoCard({element}:{element:ToDo}){
     <IonCard className={style.Card}>
          <div className={style.btns}>
          <IonItem className={style.BtnDelete} onClick={()=>{Alert()}} lines="none"><IonIcon color="danger" icon={trashBin} /></IonItem>
-         <IonItem className={style.BtnEdit} routerLink={"EditTodo/"+element.id} routerDirection="forward" lines="none"><IonIcon className={style.btnEdit} color="warning" icon={createOutline}/></IonItem>
+         <IonItem className={style.BtnEdit} routerLink={"edit/"+element.id} routerDirection="forward" lines="none"><IonIcon className={style.btnEdit} color="warning" icon={createOutline}/></IonItem>
          </div>
         <IonImg src={img} className={style.Img}/>      
         <IonCardHeader>

@@ -36,7 +36,7 @@ export  function Home() {
 
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-                  <IonFabButton routerLink="/addToDo" routerDirection="forward" color="tertiary">
+                  <IonFabButton routerLink="/add" routerDirection="forward" color="tertiary">
                     <IonIcon icon={add} />
                   </IonFabButton>
           </IonFab>
