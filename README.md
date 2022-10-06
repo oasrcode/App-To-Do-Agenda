@@ -1,13 +1,19 @@
-# App Agenda/To-Do
-***
+# App To-Do/Agenda
 
-## Presentación
+## Table of Contents
+ - [Intro](#intro)
+ - [Technologies](#technologies)
+ - [Requirements](#requirements)
+ - [How to clone](#how-to-clone)
+ - [Postman](#postman)
+ - [How it work](#how-it-work)
+
+### Intro
 ***
 La aplicación permite crearnos tarjetas con las que podremos planificar nuestro día a día
 
-## Technologies
+### Technologies
 ***
-El proyecto esta realizado en:
 * [Ionic](https://ionic.io/)
 * [React](https://es.reactjs.org/)
 * [Node.js](https://nodejs.org/es/)
@@ -15,67 +21,52 @@ El proyecto esta realizado en:
 * [Sequelize](https://sequelize.org/)
 * [Mysql](https://www.mysql.com/)
 
-## Programas necesarios
+### Requirements
 
-Para poder utilizar el proyecto en localhost en necesario clonarlo y tener algunos programas necesarios:
+- [Nodejs](https://nodejs.org/es/download/) v16.16.0 .
+- IDE [VS Code](https://code.visualstudio.com/download)
+- [PostMan](https://www.postman.com/downloads/) . (Optional)
+- [Git](https://git-scm.com/downloads) .
 
-- [Nodejs](https://nodejs.org/es/download/) v16.16.0 o superior.
-- IDE de desarrollo de tu comodidad Ej. [VS Code](https://code.visualstudio.com/download)
-- [PostMan](https://www.postman.com/downloads/) para puebas de APIS. (Opcional)
-- [Git](https://git-scm.com/downloads) para poder gestionar las versiones.
-
-## Como Clonar
-
-Comando para clonar:
+### How to clone
 
 ```bash
 cd existing_folder
-git clone [LINK DEL REPOSITORIO]
+git clone https://github.com/oasrcode/App-To-Do-Agenda
 
 ```
-## Instalar node_module del backend
+#### Install nodejs node_modules
 
-En la carpeta del backend escribimos por terminal
+Open a new terminal to run the backend
 
 ```bash
 npm install
 
 ```
-## Instalar node_module del frontent
+#### Install ionic node_modules
 
-En la carpeta del frontend escribimos por terminal
+Same with the frontend
 
 ```bash
 ionic serve
 
 ```
-y cuando nos pregunte si queremos instalar los scripts le escribimos 'y' y enter.
-
-## Ejecución
+ :warning: Type 'y' to install react scripts.
+#### Run
 
 Ejecutar el xampp y crear la base de datos. Sequelizer añadira una tabla al conectarse.
 
-En la parte backend
+On the backend
 
 ```bash
 node server.js
 
 ```
-En la parte frontend
+On the frontend
 ```bash
 ionic serve
 
 ```
+### Postman
 
-## Postman
-
-Enlace a postman -> [documentación](https://www.postman.com/restless-firefly-229974/workspace/oasrcode/documentation/20512831-53234c34-ccfa-4941-8ee1-0ce41650c803)
-
-## Manual de uso
-
- *[]La aplicación arranca en el menu principal donde carga el contenido de la agenda.
- *[]Dicha pantalla llama a la api al iniciarse y rellana la pantalal de tarjetas con el contenido de la ajenda.
- *[]Las tarjetas tienen 2 botones el de editar, a la derecha, y eliminar a la izquierda.
- *Al eliminar una tarjeta hay que refrescar la pantalla, deslizandola hacia abajo.
- *Por último, en la esquina inferier derecha tenemos el botón para añadir contenido a nuestra ajenda.Nos llevará 
- a una nueva pagía donde debemos rellenar todo los campos, luego solo debemos hacer clic en volver.
+Link to postman -> [documentación](https://www.postman.com/restless-firefly-229974/workspace/oasrcode/documentation/20512831-53234c34-ccfa-4941-8ee1-0ce41650c803)
