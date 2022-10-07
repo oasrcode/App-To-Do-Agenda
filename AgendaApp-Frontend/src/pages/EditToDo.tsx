@@ -20,23 +20,18 @@ import style from "./css/EditToDo.module.css"
 
 
 export  function EditToDo() {
-
     
     let {id}:{id:string} = useParams();
     const [toDos,setToDos] = useState<ToDo>(); 
-    const [presentAlert] = useIonAlert();
+    const [presentAlert] = useIonAlert(); 
    
     const typeInput = useRef<HTMLIonSelectElement>(null);
     let titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
-
   
     useIonViewWillEnter(()=>{ getByIdToDo({id}).then(response => response.json()).then((result)=>{setToDos(result)});});
     
-   
-    
-
     function UpdateToDo(){
         let title  = titleInput.current?.value as string;
         let summ = summInput.current?.value as string ;
@@ -77,6 +72,7 @@ export  function EditToDo() {
             header: 'Editado!!!',
             buttons: ['OK'],
           }))
+          
     }
 
    
@@ -86,7 +82,6 @@ export  function EditToDo() {
             <IonToolbar  color="tertiary">
                 <IonButtons slot="start" color="tertiary">
                     <IonBackButton text="volver"  defaultHref="/" />
-                    
                 </IonButtons>
              </IonToolbar>
             </IonHeader>

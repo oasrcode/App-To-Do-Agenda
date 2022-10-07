@@ -6,29 +6,27 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonList, 
 
-    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert} 
+    IonModal, IonPage,  IonRouterLink,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert} 
     from "@ionic/react";
 
 
 import {useRef} from "react";
 import { ToDo, ToDoType } from "../data/ToDoContext";
+import { getAllToDo } from "../Service/getAllToDo";
 import { postToDo } from "../Service/postToDo";
 import style from "./css/AddToDo.module.css"
-
 
 
 export  function AddToDo() {
 
     const [presentAlert] = useIonAlert();
     
-   
     const typeInput = useRef<HTMLIonSelectElement>(null);
     const titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
 
-
-     
+  
 
     function CreateTodo(){
         let title  = titleInput.current?.value as string;
@@ -46,8 +44,7 @@ export  function AddToDo() {
             Alert("la fecha y la hora")
         }else{
           
-          
-           
+                    
         let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
            
         postToDo(element).then(response => response.json()) 
@@ -56,8 +53,6 @@ export  function AddToDo() {
             
         AlertDone();
         }
-
-
     }
 
     function Alert(componente:string){
