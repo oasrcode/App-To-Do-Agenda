@@ -54,7 +54,7 @@ ionic serve
  :warning: Type 'y' to install react scripts.
 #### Run
 
-Execute xampp and import [.sql](https://github.com/oasrcode/App-To-Do-Agenda) script to create the database.
+Execute xampp and create a database with the name 'DB: ...' [link](https://github.com/oasrcode/App-To-Do-Agenda/blob/main/AgendaApp-backend/app/config/db.config.js)
 
 On the backend
 
