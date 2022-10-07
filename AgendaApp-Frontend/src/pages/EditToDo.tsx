@@ -25,6 +25,7 @@ export  function EditToDo() {
     const [toDos,setToDos] = useState<ToDo>(); 
     const [presentAlert] = useIonAlert(); 
    
+     //can use this way or Onchange with useState
     const typeInput = useRef<HTMLIonSelectElement>(null);
     let titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
@@ -32,7 +33,9 @@ export  function EditToDo() {
   
     useIonViewWillEnter(()=>{ getByIdToDo({id}).then(response => response.json()).then((result)=>{setToDos(result)});});
     
-    function UpdateToDo(){
+    function onSubmit(event:any){
+        event.preventDefault();
+              
         let title  = titleInput.current?.value as string;
         let summ = summInput.current?.value as string ;
         let date =  dateTimePicker.current?.value as string 
@@ -57,9 +60,9 @@ export  function EditToDo() {
         AlertDone()
 
         }
-
+    
     }
-
+    
     function Alert(componente:string){
         return(presentAlert({
             header: 'Rellena '+ componente,
@@ -86,6 +89,7 @@ export  function EditToDo() {
              </IonToolbar>
             </IonHeader>
             <IonContent>
+                <form onSubmit={onSubmit}>
             <IonList>
                     <IonItem lines="none" >
                         <IonSelect value={toDos?.type} ref={typeInput} slot="end" interface="popover" placeholder="Elige el tipo">
@@ -114,8 +118,9 @@ export  function EditToDo() {
                     </IonModal>
                 </IonItem>
                 <div className={style.BtnDiv}>
-                <IonButton  size={"large"}  shape={"round"}  id="click-trigger" onClick={UpdateToDo} className={style.BtnAdd}>Modificar</IonButton> 
-                </div>               
+                <IonButton type="submit" size={"large"}  shape={"round"}  id="click-trigger"  className={style.BtnAdd}>Modificar</IonButton> 
+                </div>
+                </form>               
             </IonContent>
         </IonPage>
       )
