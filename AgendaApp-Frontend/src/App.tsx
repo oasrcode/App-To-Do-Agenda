@@ -22,11 +22,6 @@ import '@ionic/react/css/display.css';
 import { EditToDo } from './pages/EditToDo';
 import { AddToDo } from './pages/AddToDo';
 
-
-
-
-
-
 setupIonicReact();
 
 const App: React.FC = () => (
