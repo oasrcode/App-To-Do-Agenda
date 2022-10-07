@@ -6,11 +6,11 @@
  - [Requirements](#requirements)
  - [How to clone](#how-to-clone)
  - [Postman](#postman)
- - [How it work](#how-it-work)
+
 
 ### Intro
 ***
-La aplicación permite crearnos tarjetas con las que podremos planificar nuestro día a día
+To-Do/Agenda App allow us to create cards with our schelude.
 
 ### Technologies
 ***
@@ -54,7 +54,7 @@ ionic serve
  :warning: Type 'y' to install react scripts.
 #### Run
 
-Ejecutar el xampp y crear la base de datos. Sequelizer añadira una tabla al conectarse.
+Execute xampp and import [.sql](https://github.com/oasrcode/App-To-Do-Agenda) script to create the database.
 
 On the backend
 
