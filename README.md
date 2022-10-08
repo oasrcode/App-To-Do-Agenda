@@ -32,7 +32,7 @@ To-Do/Agenda App allow us to create cards with our schelude.
 
 ```bash
 cd existing_folder
-git clone https://github.com/oasrcode/App-To-Do-Agenda
+git clone https://github.com/oasrcode/App-To-Do-Agenda.git
 
 ```
 #### Install nodejs node_modules
