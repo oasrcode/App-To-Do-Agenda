@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 var corsOptions = {
   origin: "http://localhost:8100"
@@ -29,13 +32,14 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
-//drop 
-  // db.sequelize.sync({ force: true }).then(() => {
-  //   console.log("Drop and re-sync db.");
-  // });
+ 
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });
 
 // set port, listen for requests
 require("./app/routes/toDo.routes")(app)
+require("./app/routes/Photo.routes")(app)
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

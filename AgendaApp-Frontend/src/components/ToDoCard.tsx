@@ -5,16 +5,18 @@ import { IonCard, IonCardContent, IonCardHeader,
 import imgHobby from "../images/hobby.jpg";
 import imgTask from "../images/task.jpg";
 import imgRest from "../images/resting.jpg";
-import style from "../components/ToDoCard.module.css"
+import style from "../components/css/ToDoCard.module.css";
 
 import { createOutline } from "ionicons/icons";
 import { trashBin } from "ionicons/icons";
-import { deleteToDo } from "../Service/deleteTodo";
-import { Props } from "../data/PropsContext";
+
+
+import { deleteToDo } from "../Service/toDos/deleteTodo";
+import { ToDoProps } from "../data/PropsContext";
 
 
 
-export function ToDoCard({props}:{props:Props}){
+export function ToDoCard({props}:{props:ToDoProps}){
 
   let img;
   const [presentAlert] = useIonAlert();

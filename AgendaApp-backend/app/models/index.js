@@ -1,5 +1,4 @@
 const dbConfig = require("../config/db.config.js");
-
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -20,5 +19,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.toDo = require("./ToDo.model")(sequelize, Sequelize);
+db.photo = require("./Photo.model")(sequelize, Sequelize);
 
 module.exports = db;

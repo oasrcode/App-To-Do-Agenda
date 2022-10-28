@@ -1,11 +1,13 @@
-import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage,IonRefresher,IonRefresherContent,IonRow, IonSplitPane, IonTitle, IonToolbar, RefresherEventDetail, useIonViewWillEnter} from "@ionic/react";
-import {  useEffect, useReducer, useState } from "react";
-import { getAllToDo } from "../Service/getAllToDo";
-import { add, today} from 'ionicons/icons';
+import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon,IonPage,IonRow, IonTitle, IonToolbar, useIonViewWillEnter} from "@ionic/react";
+import {  useEffect, useState } from "react";
+
+import { add, image} from 'ionicons/icons';
 import { ToDo } from "../data/ToDoContext";
 import { ToDoCard } from "../components/ToDoCard"
 import  style  from "./css/Home.module.css"
-import { Props } from "../data/PropsContext";
+
+import { getAllToDo } from "../Service/toDos/getAllToDo";
+import { ToDoProps } from "../data/PropsContext";
 
 
 
@@ -16,15 +18,23 @@ export  function Home() {
   const [change,setChange] = useState<string>("");
 
  
-    useIonViewWillEnter(()=>{   
-    getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
+    useIonViewWillEnter(()=>{ 
     
-    })
+        getAllToDo().then(response => {
+          setToDos(response.data)
+        }).catch(e => {
+          console.log(e)
+        })
+     
+     })
 
 
     useEffect(()=>{
-      getAllToDo().then(response=>response.json()).then((result)=>{setToDos(result)});
-     
+      getAllToDo().then(response => {
+        setToDos(response.data)
+      }).catch(e => {
+        console.log(e)
+      })
     },[change])
     
 
@@ -35,6 +45,7 @@ export  function Home() {
         <IonHeader>
           <IonToolbar color="tertiary">
           <IonTitle text-center >ToDoApp</IonTitle>
+          <IonButton slot="end" fill="outline" color={"light"} routerLink="/myimages"><IonIcon icon={image}></IonIcon></IonButton>
           </IonToolbar>       
         </IonHeader>
         <IonContent fullscreen={true} color="light">
@@ -51,7 +62,7 @@ export  function Home() {
                     ((e:ToDo,key:any)=>
                       {
                       let element = e;
-                      const prop :Props={element,setChange};
+                      const prop :ToDoProps={element,setChange};
                       return <ToDoCard ion-align-self-center  key={key} props={prop} />
                       }
                     )

@@ -1,8 +1,6 @@
 import { ToDo } from "./ToDoContext";
 
-export interface Props{
-
+export interface ToDoProps{
     element: ToDo;
-    setChange: (val: string) => void;
-      
+    setChange: (val: string) => void;  
 }

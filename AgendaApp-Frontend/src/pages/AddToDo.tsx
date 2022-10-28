@@ -12,7 +12,8 @@ import { IonBackButton, IonButton, IonButtons,
 
 import {useRef} from "react";
 import { ToDo, ToDoType } from "../data/ToDoContext";
-import { postToDo } from "../Service/postToDo";
+import { postToDo } from "../Service/toDos/postToDo";
+
 import style from "./css/AddToDo.module.css"
 
 
@@ -68,14 +69,10 @@ export  function AddToDo() {
             }else if(date === undefined){
                 Alert("la fecha y la hora")
             }else{
-              
-                        
+                   
             let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
-               
-            postToDo(element).then(response => response.json()) 
-            .then(json => console.log(json))
-            .catch(err => console.log(err))
-                
+            postToDo(element)
+            
             AlertDone();
             }
     }

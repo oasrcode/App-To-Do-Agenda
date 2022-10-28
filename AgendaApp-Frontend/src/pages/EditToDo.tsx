@@ -13,8 +13,9 @@ import { IonBackButton, IonButton, IonButtons,
 import { useRef, useState }  from "react";
 import { useParams } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
-import { getByIdToDo } from "../Service/getByIdToDo";
-import { putToDo } from "../Service/putToDo";
+import { getByIdToDo } from "../Service/toDos/getByIdToDo";
+import { putToDo } from "../Service/toDos/putToDo";
+
 import style from "./css/EditToDo.module.css"
 
 
@@ -27,11 +28,18 @@ export  function EditToDo() {
    
      //can use this way or Onchange with useState
     const typeInput = useRef<HTMLIonSelectElement>(null);
-    let titleInput = useRef<HTMLIonInputElement>(null);
+    const titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
   
-    useIonViewWillEnter(()=>{ getByIdToDo({id}).then(response => response.json()).then((result)=>{setToDos(result)});});
+    useIonViewWillEnter(()=>{ 
+        getByIdToDo(id).then(response => {
+            setToDos(response.data)
+          }).catch(e => {
+            console.log(e)
+          })
+        }
+        );
     
     function onSubmit(event:any){
         event.preventDefault();
@@ -53,9 +61,7 @@ export  function EditToDo() {
 
         let element:ToDo={id:id,title:title,summ:summ,time:date,type:type}
            
-        putToDo(element).then(response => response.json()) 
-        .then(json => console.log(json))
-        .catch(err => console.log(err))
+        putToDo(element)
         
         AlertDone()
 
@@ -84,7 +90,7 @@ export  function EditToDo() {
             <IonHeader>
             <IonToolbar  color="tertiary">
                 <IonButtons slot="start" color="tertiary">
-                    <IonBackButton text="volver"  defaultHref="/" />
+                    <IonBackButton text="volver"  defaultHref="/home" />
                 </IonButtons>
              </IonToolbar>
             </IonHeader>

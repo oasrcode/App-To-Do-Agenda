@@ -21,6 +21,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import { EditToDo } from './pages/EditToDo';
 import { AddToDo } from './pages/AddToDo';
+import { MyImages } from './pages/MyImages';
+import { EditMyImages } from './pages/EditMyImages';
 
 setupIonicReact();
 
@@ -31,6 +33,8 @@ const App: React.FC = () => (
                 <Route path="/" exact component={Home}/>
                 <Route path="/add" component={AddToDo}/>
                 <Route path="/edit/:id" component={EditToDo}/>
+                <Route path="/myimages" exact component={MyImages}/>
+                <Route path="/myimages/edit/:id" exact component={EditMyImages}/>
             </IonRouterOutlet>
         </IonReactRouter>
   </IonApp>
