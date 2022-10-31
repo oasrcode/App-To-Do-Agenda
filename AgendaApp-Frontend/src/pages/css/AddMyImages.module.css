@@ -1,0 +1,18 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+   
+}
+
+.image{
+    background-color: black;
+    height: 350px;
+    width: fit-content;
+}
+
+.titleContainer{
+    padding-top: 25px;
+}

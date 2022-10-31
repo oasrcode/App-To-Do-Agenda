@@ -42,7 +42,7 @@ export function ToDoCard({props}:{props:ToDoProps}){
       let id:string = props.element.id as string;
       deleteToDo({id})
       
-      props.setChange(props.element.id+props.element.time)//trick to reload grid from
+      props.setChange(props.element.id+props.element.time)//trick to reload grid
       
     }
 

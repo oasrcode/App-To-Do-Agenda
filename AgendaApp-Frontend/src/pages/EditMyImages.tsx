@@ -1,34 +1,43 @@
-import {  IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonToolbar, useIonViewWillEnter } from "@ionic/react";
+import {  IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonToolbar, useIonAlert, useIonViewDidEnter, useIonViewWillEnter } from "@ionic/react";
 import { aperture, ellipsisVerticalOutline, folder, send } from "ionicons/icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { pickImage } from "../hooks/pickImage";
 import { takeImage } from "../hooks/takeImage";
-import { postPhoto } from "../Service/photos/postPhoto";
 
-import style from "../components/css/PhotoForm.module.css"
+import style from "./css/EditMyImages.module.css"
 import { getPhotoByID } from "../Service/photos/getPhotoByID";
 import { MyImages } from "../data/ImageContext";
 import { putPhoto } from "../Service/photos/putPhoto";
+import { Camera } from "@capacitor/camera";
+import axios from "axios";
+
 
 export function EditMyImages(){
+ 
   let {id}:{id:string} = useParams();
-  const [webPath,setWebPath] = useState<any>();
-  const [image,setImage] = useState<MyImages>();
 
+  const [image,setImage] = useState<MyImages>();
+  const [webPath,setWebPath] = useState<any>();
+  const [presentAlert] = useIonAlert();
+  
   const titleInput = useRef<HTMLIonInputElement>(null);
 
-    
-    useIonViewWillEnter(()=>{
+
+    useEffect(()=>{
       getPhotoByID(id)
       .then(response =>{
-        console.log(response)
         setImage(response.data);
+      
       })
       .catch(err=>{
         console.log(err)
       })
-    })
+
+      
+
+      
+    },[])
 
     function getPhoto(){
       let response = takeImage();
@@ -43,25 +52,63 @@ export function EditMyImages(){
         setWebPath(photo.photos[0].webPath)
       })
     }
+
+    function Alert(componente:string){
+      return(presentAlert({
+          header: 'Rellena '+ componente,
+          buttons: ['OK'],
+        }))
+  }
   
-  async function onSubmit(){  
-    let blob = null;
+  function AlertDone(){
+    return(presentAlert({
+        header: 'Editado!',
+        buttons:  ["Ok"],
+          
+      }))
+    
+  }
+  
+  async function onSubmit(){ 
+
+    let title  = titleInput.current?.value as string;
+    if(title===""){
+      Alert("el título")
+    }else if(webPath==null){
+      Alert("la imagen")
+    }else{
+    let blob=null;
     const response = await fetch(webPath);
-
     blob = await response.blob();
+
   
 
   
+    axios({
+      method: "get",
+      withCredentials: false,
+      url: "http://localhost:8080/images/"+image?.filename,
+      headers: {"Access-Control-Allow-Origin": "*"},
+    })
+      .then(function (response) {
+        //handle success
+        console.log(response);
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+    
+
+ 
     var bodyFormData = new FormData();
     bodyFormData.append('id',id);
     bodyFormData.append('title', titleInput.current?.value as string);
     bodyFormData.append('file', blob); 
+   // putPhoto(bodyFormData);
+    AlertDone()
 
-    console.log(blob)
-  
-   
-
-    putPhoto(bodyFormData);
+    }
    }
   
   
@@ -90,10 +137,8 @@ export function EditMyImages(){
             <form onSubmit={onSubmit}>
               <div className={style.form}>
                 <IonItem>
-                <IonImg className={style.image} src={webPath ? webPath : "http://localhost:8080/images/"+image?.filename}></IonImg>
-               
+                <IonImg className={style.image}  src={webPath ? webPath : "https://ionicframework.com/docs/img/demos/thumbnail.svg"}></IonImg>
                 </IonItem>
-                
                 <IonItem>
                 <IonLabel>Titulo</IonLabel>
                 <IonInput type="text" ref={titleInput} value={image?.title}/>

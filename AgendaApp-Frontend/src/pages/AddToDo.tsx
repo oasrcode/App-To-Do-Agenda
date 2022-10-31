@@ -11,6 +11,7 @@ import { IonBackButton, IonButton, IonButtons,
 
 
 import {useRef} from "react";
+import { useHistory } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
 import { postToDo } from "../Service/toDos/postToDo";
 
@@ -26,6 +27,7 @@ export  function AddToDo() {
     const titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
+    const history = useHistory();
 
   
     function Alert(componente:string){
@@ -38,8 +40,16 @@ export  function AddToDo() {
     function AlertDone(){
         return(presentAlert({
             header: 'Añadido a la agenda',
-            buttons: ['OK'],
+            buttons:  [
+                {
+                  text: 'volver',
+                  handler: () => {
+                    history.push("/");
+                  },
+                },
+              ],
           }))
+        
     }
 
 
@@ -51,15 +61,16 @@ export  function AddToDo() {
         let date =  dateTimePicker.current?.value as string 
         let type = typeInput.current?.value as ToDoType
         
-        if(type === undefined){
-            Alert("el tipo")
-        }else if(title === ""){
-            Alert("el título")
-        }else if(summ === ""){
-            Alert("la descripción")
-        }else if(date === undefined){
-            Alert("la fecha y la hora")
-        }else{
+        // if(type === undefined){
+        //     Alert("el tipo")
+        // }else if(title === ""){
+        //     Alert("el título")
+        // }else if(summ === ""){
+        //     Alert("la descripción")
+        // }else if(date === undefined){
+        //     Alert("la fecha y la hora")
+        // }
+        // else{
             if(type === undefined){
                 Alert("el tipo")
             }else if(title === ""){
@@ -74,7 +85,7 @@ export  function AddToDo() {
             postToDo(element)
             
             AlertDone();
-            }
+            //}
     }
 }
 

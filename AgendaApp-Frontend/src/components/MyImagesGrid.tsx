@@ -1,47 +1,50 @@
 
-import { IonActionSheet, IonCol, IonContent, IonGrid, IonImg, IonRow} from "@ionic/react";
+import { IonActionSheet, IonAlert, IonCol, IonContent, IonGrid, IonImg, IonRow, useIonViewWillEnter} from "@ionic/react";
 import { pencil, trash } from "ionicons/icons";
-import {  useEffect,useReducer,useState } from "react";
+import {  useEffect,useState } from "react";
+
 import { useHistory } from "react-router";
 import { MyImages } from "../data/ImageContext";
-import { PhotoModalProp } from "../data/PhotoModalContext";
 import { deletePhoto } from "../Service/photos/deletePhoto";
-
-
-
 import { getAllPhotos } from "../Service/photos/getAllPhotos";
 
-
+import style from "./css/MyImagesGrid.module.css"
 
 
 export function MyImagesGrid(){
 
     const [images,setImages] = useState<MyImages[]>([]);
     const [optionSheet,setOptionSheet] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const [imageID,setImageID] = useState("");
-    const [refresh,setRefresh] = useReducer(x=>x+2,0);
-
-
-    // const [modalState, setModalState] = useState(false);
-  const history = useHistory();
-
-    // let propModalState:PhotoModalProp={
-    // modalState:modalState,
-    // setModalState:setModalState};
-
+    const [rerender, setRerender] = useState(0);
    
 
+
+  const history = useHistory();
+
     useEffect(()=>{
-        console.log("bsuco toda las imagenes")
-        getAllPhotos().then(response => {
-            setImages(response.data)
-          }).catch(e => {
-            console.log(e)
-          })
-    },[refresh])
+      getAllPhotos().then(response => {
+        setImages(response.data)
+      }).catch(e => {
+        console.log(e)
+      })
+        
+      
+      /* problem with the clics over alers, sometime dosent  delete but the image still there,
+       even when useEffect is re-called to reload the component as the first time*/ 
+          
+    },[rerender])
 
+    useIonViewWillEnter(()=>{
+      getAllPhotos().then(response => {
+        setImages(response.data)
+      }).catch(e => {
+        console.log(e)
+      })
+    })
 
-    
+   
     return(
     <IonContent>
         <IonGrid>
@@ -51,9 +54,9 @@ export function MyImagesGrid(){
                     ((e:MyImages,key:any)=>
                         {
                         return (    
-                            <IonCol key={key} size="4">        
-                                <IonImg  alt={"imagen de "+e.title} src={"http://localhost:8080/images/"+e.filename}
-                                onClick={()=>{setOptionSheet(true) ; setImageID(e.id)}}></IonImg>
+                            <IonCol key={key} size="4" >                  
+                              <IonImg className={style.imgContainer}  alt={"imagen de "+e.title} src={"http://localhost:8080/images/"+e.filename}
+                                onClick={()=>{setOptionSheet(true) ; setImageID(e.id)}}></IonImg>        
                             </IonCol>
                         )
                         }
@@ -62,19 +65,42 @@ export function MyImagesGrid(){
                 }
             </IonRow>
         </IonGrid>
-        
+       
+        <IonAlert
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        message="¿Estas seguro?"
+        buttons={[
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              setShowAlert(false);
+            },
+          },
+          {
+            text: 'OK',
+            role: 'confirm',
+            handler: () => {
+              deletePhoto(imageID);
+              setRerender(prev => prev + 1);
+
+            },
+          },
+        ]}
+        />
         <IonActionSheet
          isOpen={optionSheet}
+         cssClass="actionSheet"
          buttons={[
           {
             text: 'Borrar',
             role: 'destructive',
             icon:trash,
             handler: ()=>{
-              console.log("work delete")
-              deletePhoto(imageID)
               setOptionSheet(false)
-              setRefresh()
+              setShowAlert(true)
+              
             },
           },
           {
@@ -82,11 +108,7 @@ export function MyImagesGrid(){
             role:'Edit',
             icon:pencil,
             handler: ()=>{
-              console.log("work edit")
-              // setModalState(true)
-
               history.push("/myimages/edit/"+imageID)
-
               setOptionSheet(false)
 
             },
@@ -96,12 +118,10 @@ export function MyImagesGrid(){
             role: 'cancel',
             handler: ()=>{
               setOptionSheet(false)
-              setRefresh()
             },
           },
         ]}
-         >
-         </IonActionSheet>
+         />
     </IonContent>
     )
 

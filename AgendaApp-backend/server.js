@@ -7,7 +7,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 var corsOptions = {
-  origin: "http://localhost:8100"
+  origin: "*"
 };
 
 app.use(cors(corsOptions));
@@ -17,6 +17,8 @@ app.use(express.json());
 
 
 app.use(express.urlencoded({ extended: true }));
+
+
 
 
 app.get("/", (req, res) => {

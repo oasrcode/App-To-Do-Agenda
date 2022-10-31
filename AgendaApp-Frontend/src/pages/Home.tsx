@@ -19,7 +19,6 @@ export  function Home() {
 
  
     useIonViewWillEnter(()=>{ 
-    
         getAllToDo().then(response => {
           setToDos(response.data)
         }).catch(e => {
@@ -45,7 +44,7 @@ export  function Home() {
         <IonHeader>
           <IonToolbar color="tertiary">
           <IonTitle text-center >ToDoApp</IonTitle>
-          <IonButton slot="end" fill="outline" color={"light"} routerLink="/myimages"><IonIcon icon={image}></IonIcon></IonButton>
+          <IonButton slot="end" fill="outline" color={"light"} routerLink="/myimages" routerDirection="forward"><IonIcon icon={image}></IonIcon></IonButton>
           </IonToolbar>       
         </IonHeader>
         <IonContent fullscreen={true} color="light">
