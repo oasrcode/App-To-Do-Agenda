@@ -3,7 +3,7 @@ export function deletePhoto(id:string){
 
     axios.delete("http://localhost:8080/api/photos/"+id)
     .then(res=>{
-        console.log(res)
+       
       })
       .catch(err=>{
         console.log(err);

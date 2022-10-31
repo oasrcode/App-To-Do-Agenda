@@ -1,5 +1,6 @@
 
-import { IonActionSheet, IonAlert, IonCol, IonContent, IonGrid, IonImg, IonRow, useIonViewWillEnter} from "@ionic/react";
+import { IonActionSheet, IonAlert, IonCol, IonContent, IonGrid, IonImg, IonRow, useIonViewDidEnter, useIonViewWillEnter} from "@ionic/react";
+import { randomInt } from "crypto";
 import { pencil, trash } from "ionicons/icons";
 import {  useEffect,useState } from "react";
 
@@ -17,34 +18,22 @@ export function MyImagesGrid(){
     const [optionSheet,setOptionSheet] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [imageID,setImageID] = useState("");
-    const [rerender, setRerender] = useState(0);
-   
+    const [change,setChange] = useState<boolean>();
 
-
-  const history = useHistory();
+    const history = useHistory();
 
     useEffect(()=>{
       getAllPhotos().then(response => {
         setImages(response.data)
       }).catch(e => {
         console.log(e)
-      })
-        
-      
-      /* problem with the clics over alers, sometime dosent  delete but the image still there,
-       even when useEffect is re-called to reload the component as the first time*/ 
-          
-    },[rerender])
+      })    
+      setChange(false)
+    },[change])
 
     useIonViewWillEnter(()=>{
-      getAllPhotos().then(response => {
-        setImages(response.data)
-      }).catch(e => {
-        console.log(e)
-      })
+      setChange(true);
     })
-
-   
     return(
     <IonContent>
         <IonGrid>
@@ -61,7 +50,6 @@ export function MyImagesGrid(){
                         )
                         }
                     )
-                    
                 }
             </IonRow>
         </IonGrid>
@@ -83,7 +71,9 @@ export function MyImagesGrid(){
             role: 'confirm',
             handler: () => {
               deletePhoto(imageID);
-              setRerender(prev => prev + 1);
+              
+             setChange(true)
+                
 
             },
           },

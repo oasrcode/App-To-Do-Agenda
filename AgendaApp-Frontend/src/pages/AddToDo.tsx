@@ -6,7 +6,7 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonList, 
 
-    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert} 
+    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter} 
     from "@ionic/react";
 
 
@@ -27,9 +27,14 @@ export  function AddToDo() {
     const titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
+    const myForm = useRef<HTMLFormElement>()
     const history = useHistory();
 
-  
+    useIonViewWillEnter(()=>{
+       
+    })
+
+
     function Alert(componente:string){
         return(presentAlert({
             header: 'Rellena '+ componente,
@@ -45,6 +50,7 @@ export  function AddToDo() {
                   text: 'volver',
                   handler: () => {
                     history.push("/");
+                    myForm.current?.reset()
                   },
                 },
               ],
@@ -61,16 +67,7 @@ export  function AddToDo() {
         let date =  dateTimePicker.current?.value as string 
         let type = typeInput.current?.value as ToDoType
         
-        // if(type === undefined){
-        //     Alert("el tipo")
-        // }else if(title === ""){
-        //     Alert("el título")
-        // }else if(summ === ""){
-        //     Alert("la descripción")
-        // }else if(date === undefined){
-        //     Alert("la fecha y la hora")
-        // }
-        // else{
+        
             if(type === undefined){
                 Alert("el tipo")
             }else if(title === ""){
@@ -83,9 +80,10 @@ export  function AddToDo() {
                    
             let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
             postToDo(element)
+  
+   
+             AlertDone();
             
-            AlertDone();
-            //}
     }
 }
 

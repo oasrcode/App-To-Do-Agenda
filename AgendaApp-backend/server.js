@@ -7,7 +7,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 var corsOptions = {
-  origin: "*"
+  origin: "http://localhost:8100",
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
 };
 
 app.use(cors(corsOptions));
@@ -17,8 +19,6 @@ app.use(express.json());
 
 
 app.use(express.urlencoded({ extended: true }));
-
-
 
 
 app.get("/", (req, res) => {

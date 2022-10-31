@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 100px;
+    padding-top: 35px;
    
 }
 
@@ -14,5 +14,10 @@
 }
 
 .titleContainer{
-    padding-top: 25px;
+    padding-top: 30px;
+}
+
+.btnSummit{
+    margin-top: 40px;
+    
 }

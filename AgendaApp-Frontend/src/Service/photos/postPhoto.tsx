@@ -9,8 +9,7 @@ export function postPhoto(form:FormData){
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then(function (response) {
-          //handle success
-          console.log(response);
+         
         })
         .catch(function (response) {
           //handle error

@@ -1,18 +1,15 @@
-import {  IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonToolbar } from "@ionic/react";
-import { cameraOutline, home, refresh } from "ionicons/icons";
-import { useState } from "react";
+import {  IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonToolbar } from "@ionic/react";
+import { cameraOutline, home } from "ionicons/icons";
+
 import { MyImagesGrid } from "../components/MyImagesGrid";
-import { PhotoModalProp } from "../data/PhotoModalContext";
+
 
 
 export function MyImages(){
 
-    const [modalState, setModalState] = useState(false);
-   
   
-    let propModalState:PhotoModalProp={
-    modalState:modalState,
-    setModalState:setModalState};
+   
+
 
   
     return(

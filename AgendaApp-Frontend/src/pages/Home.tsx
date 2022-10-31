@@ -15,18 +15,10 @@ export  function Home() {
 
   const [toDos,setToDos] = useState<ToDo[]>([]);
   
-  const [change,setChange] = useState<string>("");
+  const [change,setChange] = useState<boolean>();
 
  
-    useIonViewWillEnter(()=>{ 
-        getAllToDo().then(response => {
-          setToDos(response.data)
-        }).catch(e => {
-          console.log(e)
-        })
-     
-     })
-
+   
 
     useEffect(()=>{
       getAllToDo().then(response => {
@@ -34,7 +26,12 @@ export  function Home() {
       }).catch(e => {
         console.log(e)
       })
+      setChange(false)
     },[change])
+
+    useIonViewWillEnter(()=>{
+      setChange(true);
+    })
     
 
 

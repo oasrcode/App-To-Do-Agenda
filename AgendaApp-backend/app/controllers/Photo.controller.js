@@ -73,12 +73,14 @@ exports.findOne = (req, res) => {
 
 exports.update=(req,res)=>{
   const id = req.params.id;
-  
-  const photo = {
-    title: req.body.title,
-    comment: req.body.comment,
-    filename: req.file ? req.file.filename : ""
-  };
+
+let photo = {
+  title: req.body.title
+}
+
+  if(req.body.updateImage=="true"){
+    photo.filename = req.file.filename
+  }
 
   Photo.update(photo, {
     where: { id: id }

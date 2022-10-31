@@ -1,5 +1,5 @@
-import {  IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonToolbar, useIonAlert } from "@ionic/react";
-import { aperture, ellipsisVerticalOutline, folder, send } from "ionicons/icons";
+import {  IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton,  IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonToolbar, useIonAlert, useIonViewWillEnter } from "@ionic/react";
+import { aperture, folder, send } from "ionicons/icons";
 import { useRef, useState } from "react";
 import { useHistory } from "react-router";
 import { pickImage } from "../hooks/pickImage";
@@ -7,14 +7,20 @@ import { takeImage } from "../hooks/takeImage";
 import { postPhoto } from "../Service/photos/postPhoto";
 
 import style from "./css/AddMyImages.module.css"
+
 export function AddMyImages(){
 
-  const [webPath,setWebPath] = useState<any>(null);
+  const [webPath,setWebPath] = useState<any>();
  
   const [presentAlert] = useIonAlert();
+
   const history = useHistory();
 
   const titleInput = useRef<HTMLIonInputElement>(null);
+
+  useIonViewWillEnter(()=>{
+    setWebPath("https://ionicframework.com/docs/img/demos/thumbnail.svg")
+  })
 
   function Alert(componente:string){
     return(presentAlert({
@@ -23,11 +29,17 @@ export function AddMyImages(){
       }))
 }
 
+
+
 function AlertDone(){
   return(presentAlert({
       header: 'Añadido a la galería personal',
-      buttons:  ["Ok"],
-        
+      buttons:  [{
+        text: 'volver',
+        handler: () => {
+          history.push("/myimages");
+        },
+      }],
     }))
   
 }
@@ -46,7 +58,9 @@ function AlertDone(){
     })
   }
 
-async function onSubmit(){  
+async function onSubmit(event:any){  
+    event.preventDefault();
+
     let title  = titleInput.current?.value as string;
     if(title===""){
       Alert("el título")
@@ -63,6 +77,7 @@ async function onSubmit(){
     postPhoto(bodyFormData);
     AlertDone();
     
+    
     }
  }
 
@@ -78,23 +93,22 @@ async function onSubmit(){
         </IonHeader>
         <IonContent>
          
-        <IonFab vertical="top" horizontal="start" slot="fixed" >
-          <IonFabButton color={"tertiary"}>
-            <IonIcon icon={ellipsisVerticalOutline} />
-          </IonFabButton>
-          <IonFabList side="end" className={style.FabList}>
-            <IonFabButton onClick={getPhoto}><IonIcon icon={aperture} /></IonFabButton>
-            <IonFabButton onClick={getPicked}><IonIcon icon={folder} /></IonFabButton>
-            <IonFabButton onClick={onSubmit}><IonIcon icon={send} /></IonFabButton>
-          </IonFabList>            
-        </IonFab>
+          <IonFab vertical="bottom" horizontal="end">
+          <IonFabButton color={"tertiary"} onClick={getPhoto}><IonIcon icon={aperture} /></IonFabButton>
+          </IonFab>
+          <IonFab vertical="bottom" horizontal="start">
+          <IonFabButton color={"tertiary"} onClick={getPicked}><IonIcon icon={folder} /></IonFabButton>
+          </IonFab>
+       
+        
           <form onSubmit={onSubmit}>
             <div className={style.form}>          
-              <IonImg className={style.image} src={webPath ? webPath : "https://ionicframework.com/docs/img/demos/thumbnail.svg"}></IonImg>      
+              <IonImg className={style.image} src={webPath }></IonImg>      
               <IonItem className={style.titleContainer}>
               <IonLabel>Titulo</IonLabel>
-              <IonInput type="text" ref={titleInput}></IonInput>
+              <IonInput type="text" ref={titleInput} value="" ></IonInput>
               </IonItem>
+              <IonButton className={style.btnSummit} color={"tertiary"} shape="round" type="submit"><IonIcon icon={send}/></IonButton>
             </div>
           </form>      
         </IonContent>
