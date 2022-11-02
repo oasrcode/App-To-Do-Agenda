@@ -1,5 +1,6 @@
 module.exports = app => {
     const ToDo = require("../controllers/ToDo.controller");
+    const auth = require("../middleware/auth/auth.js")
   
     var router = require("express").Router();
   
@@ -7,7 +8,7 @@ module.exports = app => {
     router.post("/", ToDo.create);
   
 
-    router.get("/all", ToDo.findAll);
+    router.get("/all",auth.isAuthenticated, ToDo.findAll);
     
     router.get("/:id",ToDo.findOne);
   

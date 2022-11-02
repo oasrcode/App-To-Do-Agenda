@@ -19,7 +19,7 @@ export function MyImages(){
             <IonButtons slot="start" color="tertiary">
               <IonButton  fill="clear"  routerLink="/" routerDirection="back"><IonIcon icon={home}></IonIcon></IonButton>
               </IonButtons>
-            <IonButton fill="outline"  color={"light"} slot="end" routerLink="/myimages/add"><IonIcon icon={cameraOutline}></IonIcon></IonButton>  
+            <IonButton fill="outline"  color={"light"} slot="end" routerLink="/addimage"><IonIcon icon={cameraOutline}></IonIcon></IonButton>  
           </IonToolbar>
         </IonHeader>
         <IonContent fullscreen> 

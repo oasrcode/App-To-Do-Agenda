@@ -49,7 +49,7 @@ export  function AddToDo() {
                 {
                   text: 'volver',
                   handler: () => {
-                    history.push("/");
+                    history.push("/home");
                     myForm.current?.reset()
                   },
                 },
@@ -91,7 +91,7 @@ export  function AddToDo() {
         <IonHeader>
         <IonToolbar  color="tertiary">
             <IonButtons slot="start" color="tertiary">
-                <IonBackButton text="volver"  defaultHref="/" />
+                <IonBackButton text="volver"  defaultHref="/home" />
             </IonButtons>
          </IonToolbar>
         </IonHeader>

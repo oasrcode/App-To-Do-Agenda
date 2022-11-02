@@ -1,6 +1,16 @@
 import axios from "axios"
-export function getAllToDo(){
+export function getAllToDo(token:string){
 
-    return(axios.get("http://localhost:8080/api/all"))   
+
+    var config = {
+        method: 'get',
+        url: 'http://localhost:8080/api/all',
+        headers: {     
+           'Authorization': 'Bearer ' + token  
+            }
+      };
+      return( axios(config))
+
+    
      
 }
