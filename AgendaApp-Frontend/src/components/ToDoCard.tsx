@@ -42,7 +42,7 @@ export function ToDoCard({props}:{props:ToDoProps}){
       let id:string = props.element.id as string;
       deleteToDo({id})
       
-      props.setChange(true)//trick to reload grid
+      props.setChange(!props.change)//trick to reload grid
       
     }
 
@@ -77,7 +77,7 @@ export function ToDoCard({props}:{props:ToDoProps}){
     <IonCard className={style.Card}>
          <div className={style.btns}>
          <IonItem className={style.BtnDelete} onClick={()=>{Alert();}} lines="none"><IonIcon color="danger" icon={trashBin} /></IonItem>
-         <IonItem className={style.BtnEdit} routerLink={"edit/"+props.element.id} routerDirection="forward" lines="none"><IonIcon className={style.btnEdit} color="warning" icon={createOutline}/></IonItem>
+         <IonItem className={style.BtnEdit} routerLink={"/edit/"+props.element.id} routerDirection="forward" lines="none"><IonIcon className={style.btnEdit} color="warning" icon={createOutline}/></IonItem>
          </div>
         <IonImg src={img} className={style.Img}/>      
         <IonCardHeader>

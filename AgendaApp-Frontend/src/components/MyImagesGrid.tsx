@@ -28,12 +28,18 @@ export function MyImagesGrid(){
       }).catch(e => {
         console.log(e)
       })    
-      setChange(false)
+      
+      
     },[change])
 
     useIonViewWillEnter(()=>{
-      setChange(true);
+      getAllPhotos().then(response => {
+        setImages(response.data)
+      }).catch(e => {
+        console.log(e)
+      })  
     })
+
     return(
     <IonContent>
         <IonGrid>
@@ -70,9 +76,9 @@ export function MyImagesGrid(){
             text: 'OK',
             role: 'confirm',
             handler: () => {
-              deletePhoto(imageID);
+            deletePhoto(imageID);
               
-             setChange(true)
+            setChange(!change)
                 
 
             },
@@ -98,7 +104,7 @@ export function MyImagesGrid(){
             role:'Edit',
             icon:pencil,
             handler: ()=>{
-              history.push("/myimages/edit/"+imageID)
+              history.push("/editimage/"+imageID)
               setOptionSheet(false)
 
             },

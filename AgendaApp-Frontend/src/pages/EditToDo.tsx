@@ -11,7 +11,7 @@ import { IonBackButton, IonButton, IonButtons,
 
 
 import { useRef, useState }  from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
 import { getByIdToDo } from "../Service/toDos/getByIdToDo";
 import { putToDo } from "../Service/toDos/putToDo";
@@ -25,6 +25,8 @@ export  function EditToDo() {
     let {id}:{id:string} = useParams();
     const [toDos,setToDos] = useState<ToDo>(); 
     const [presentAlert] = useIonAlert(); 
+    const history = useHistory();
+    
    
      //can use this way or Onchange with useState
     const typeInput = useRef<HTMLIonSelectElement>(null);
@@ -38,6 +40,8 @@ export  function EditToDo() {
           }).catch(e => {
             console.log(e)
           })
+
+          console.log(id)
         }
         );
     
@@ -79,7 +83,12 @@ export  function EditToDo() {
     function AlertDone(){
         return(presentAlert({
             header: 'Editado!!!',
-            buttons: ['OK'],
+            buttons: [{
+                text: 'volver',
+                handler: () => {
+                  history.push("/");
+                },
+              }],
           }))
           
     }

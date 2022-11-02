@@ -8,6 +8,8 @@ import  style  from "./css/Home.module.css"
 
 import { getAllToDo } from "../Service/toDos/getAllToDo";
 import { ToDoProps } from "../data/PropsContext";
+import { useStorage } from "../Service/auth/useStorage";
+import { Storage } from "@ionic/storage"
 
 
 
@@ -18,22 +20,39 @@ export  function Home() {
   const [change,setChange] = useState<boolean>();
 
  
-   
+  
 
     useEffect(()=>{
-      getAllToDo().then(response => {
-        setToDos(response.data)
-      }).catch(e => {
-        console.log(e)
-      })
-      setChange(false)
+    
+      const initStorage = async ()=>{
+      const newStore = new Storage();
+      const store = await newStore.create()
+      await store.get("user").then(res=>{
+        
+        let user = JSON.parse(res);
+
+        console.log(user)
+        let token = user.access_token
+        getAllToDo(token).then(res=>{
+          console.log(res)
+          setToDos(res.data)
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+      });
+      }
+
+      initStorage();
+
     },[change])
 
-    useIonViewWillEnter(()=>{
-      setChange(true);
-    })
     
 
+   
+    
+
+  
 
  
   return (
@@ -58,7 +77,8 @@ export  function Home() {
                     ((e:ToDo,key:any)=>
                       {
                       let element = e;
-                      const prop :ToDoProps={element,setChange};
+                      const prop :ToDoProps={element,setChange,change};
+                      
                       return <ToDoCard ion-align-self-center  key={key} props={prop} />
                       }
                     )

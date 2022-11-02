@@ -24,6 +24,8 @@ import { AddToDo } from './pages/AddToDo';
 import { MyImages } from './pages/MyImages';
 import { EditMyImages } from './pages/EditMyImages';
 import { AddMyImages } from './pages/AddMyImages';
+import { Login } from './pages/Login';
+import { SignUp } from './pages/SignUp';
 
 setupIonicReact();
 
@@ -31,13 +33,15 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
             <IonRouterOutlet>
-                <Route path="/" exact component={Home}/>
+                <Route path="/login" exact component={Login}/>
+                <Route path="/Signin" exact component={SignUp}/>
+                <Route path="/home" exact component={Home}/>
                 <Route path="/add" component={AddToDo}/>
                 <Route path="/edit/:id" component={EditToDo}/>
-                
                 <Route path="/myimages" exact component={MyImages}/>
-                <Route path="/myimages/add" exact component={AddMyImages}/>
-                <Route path="/myimages/edit/:id" exact component={EditMyImages}/>
+                <Route path="/addimage" exact component={AddMyImages}/>
+                <Route path="/editimage/:id" exact component={EditMyImages}/>
+                <Redirect exact from="/" to="/login" />
             </IonRouterOutlet>
         </IonReactRouter>
   </IonApp>

@@ -20,5 +20,6 @@ db.sequelize = sequelize;
 
 db.toDo = require("./ToDo.model")(sequelize, Sequelize);
 db.photo = require("./Photo.model")(sequelize, Sequelize);
+db.user = require("./User.models")(sequelize, Sequelize);
 
 module.exports = db;
