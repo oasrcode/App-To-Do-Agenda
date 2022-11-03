@@ -9,7 +9,7 @@ import style from "./css/EditMyImages.module.css"
 import { getPhotoByID } from "../Service/photos/getPhotoByID";
 import { MyImages } from "../data/ImageContext";
 import { putPhoto } from "../Service/photos/putPhoto";
-
+import { Storage } from "@ionic/storage"
 
 
 export function EditMyImages(){
@@ -19,25 +19,80 @@ export function EditMyImages(){
   const [image,setImage] = useState<MyImages>();
   const [webPath,setWebPath] = useState<any>();
   const [presentAlert] = useIonAlert();
+  const [token,setToken] = useState("");
   
   const titleInput = useRef<HTMLIonInputElement>(null);
 
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-      getPhotoByID(id)
-      .then(response =>{
-        setImage(response.data);
+    //   getPhotoByID(id)
+    //   .then(response =>{
+    //     setImage(response.data);
       
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-
-      
+    //   })
+    //   .catch(err=>{
+    //     console.log(err)
+    //   })
 
       
-    },[])
+
+      
+    // },[])
+
+    // useIonViewWillEnter(()=>{
+    //   const initStorage = async ()=>{
+    //     const newStore = new Storage();
+    //     const store = await newStore.create()
+    //     await store.get("user").then(res=>{
+          
+    //       let user = JSON.parse(res);
+    //       let token = user.access_token
+
+    //       getPhotoByID(id,token)
+    //       .then(response =>{
+    //         setImage(response.data);
+          
+    //       })
+    //       .catch(err=>{
+    //         console.log(err)
+    //       })
+     
+
+         
+    //     }).catch(err=>{
+    //         console.log(err)
+    //         history.push("/login")
+    //     })
+    //     }
+    //     initStorage();
+    // })
+
+    useIonViewWillEnter(()=>{
+      const initStorage = async ()=>{
+        const newStore = new Storage();
+        const store = await newStore.create()
+        await store.get("user").then(res=>{
+          
+          let user = JSON.parse(res);
+          let token = user.access_token
+
+          setToken(token);
+
+         getPhotoByID(id,token).then(res=>{
+            setImage(res.data)
+         }).catch(err=>{
+            console.log(err)
+         })
+
+         
+        }).catch(err=>{
+            console.log(err)
+            history.push("/login")
+        })
+        }
+        initStorage();
+    })
 
     function getPhoto(){
       let response = takeImage();
@@ -89,7 +144,12 @@ export function EditMyImages(){
       bodyFormData.append('id',id);
       bodyFormData.append('title', titleInput.current?.value as string);
       bodyFormData.append('updateImage','false') 
-      putPhoto(bodyFormData);
+      
+      putPhoto(bodyFormData,token).then(res=>{
+          console.log(res)
+      }).catch(err=>{
+        console.log(err)
+      })
       AlertDone()
 
 
@@ -106,7 +166,12 @@ export function EditMyImages(){
     bodyFormData.append('title', titleInput.current?.value as string);
     bodyFormData.append('updateImage','true')
     bodyFormData.append('file', blob); 
-    putPhoto(bodyFormData);
+    putPhoto(bodyFormData,token).then(res=>{
+      console.log(res)
+  }).catch(err=>{
+    console.log(err)
+  })
+  AlertDone()
     AlertDone()
     }
     

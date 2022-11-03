@@ -1,0 +1,22 @@
+.Form{
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    justify-items: center;
+    gap: 50px;
+}
+
+.img{
+    padding-top: 20px;
+    height: 200px;
+    background-color: #5260ff;
+}
+
+.signinContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+
+
+}

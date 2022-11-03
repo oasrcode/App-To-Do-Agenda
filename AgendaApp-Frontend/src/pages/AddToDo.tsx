@@ -6,21 +6,23 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonList, 
 
-    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter} 
+    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter, useIonViewWillLeave} 
     from "@ionic/react";
 
 
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import { useHistory } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
 import { postToDo } from "../Service/toDos/postToDo";
-
+import { Storage } from "@ionic/storage"
 import style from "./css/AddToDo.module.css"
+
 
 
 export  function AddToDo() {
 
     const [presentAlert] = useIonAlert();
+    const [token,setToken] = useState("")
     
     //can use this way or Onchange with useState
     const typeInput = useRef<HTMLIonSelectElement>(null);
@@ -30,10 +32,30 @@ export  function AddToDo() {
     const myForm = useRef<HTMLFormElement>()
     const history = useHistory();
 
+   
+
     useIonViewWillEnter(()=>{
-       
+        const initStorage = async ()=>{
+            const newStore = new Storage();
+            const store = await newStore.create()
+            await store.get("user").then(res=>{
+              
+              let user = JSON.parse(res);
+              let token = user.access_token
+              setToken(token)
+
+             
+            }).catch(err=>{
+                console.log(err)
+                history.push("/login")
+               
+            })
+            }
+            initStorage();
     })
 
+    
+    
 
     function Alert(componente:string){
         return(presentAlert({
@@ -79,7 +101,9 @@ export  function AddToDo() {
             }else{
                    
             let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
-            postToDo(element)
+
+            console.log(token +"  :token")
+            postToDo(element,token)
   
    
              AlertDone();

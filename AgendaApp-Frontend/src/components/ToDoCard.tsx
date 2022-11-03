@@ -1,6 +1,6 @@
 import { IonCard, IonCardContent, IonCardHeader, 
   IonCardSubtitle, IonCardTitle, IonIcon, IonImg, 
-  IonItem, IonLabel, useIonAlert } from "@ionic/react";
+  IonItem, IonLabel, useIonAlert, useIonViewWillEnter } from "@ionic/react";
 
 import imgHobby from "../images/hobby.jpg";
 import imgTask from "../images/task.jpg";
@@ -9,17 +9,44 @@ import style from "../components/css/ToDoCard.module.css";
 
 import { createOutline } from "ionicons/icons";
 import { trashBin } from "ionicons/icons";
-
-
 import { deleteToDo } from "../Service/toDos/deleteTodo";
 import { ToDoProps } from "../data/PropsContext";
-
+import { Storage } from "@ionic/storage"
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 
 export function ToDoCard({props}:{props:ToDoProps}){
 
   let img;
   const [presentAlert] = useIonAlert();
+  const [token,setToken] = useState("");
+  const history = useHistory();
+
+  useEffect(()=>{
+    const initStorage = async ()=>{
+      const newStore = new Storage();
+      const store = await newStore.create()
+      await store.get("user").then(res=>{
+        
+        let user = JSON.parse(res);
+        let token = user.access_token
+
+        setToken(token);
+
+      
+
+       
+      }).catch(err=>{
+          console.log(err)
+          history.push("/login")
+      })
+      }
+      initStorage();
+  },[])
+       
+   
+
 
   
   switch (props.element.type) {
@@ -40,9 +67,11 @@ export function ToDoCard({props}:{props:ToDoProps}){
   }
     function deleteElement(){
       let id:string = props.element.id as string;
-      deleteToDo({id})
+
+      console.log(token)
+      deleteToDo(id,token)
       
-      props.setChange(!props.change)//trick to reload grid
+      props.setChange(id+token)//trick to reload grid
       
     }
 

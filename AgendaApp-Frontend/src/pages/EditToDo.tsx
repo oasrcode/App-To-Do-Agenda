@@ -15,7 +15,7 @@ import { useHistory, useParams } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
 import { getByIdToDo } from "../Service/toDos/getByIdToDo";
 import { putToDo } from "../Service/toDos/putToDo";
-
+import { Storage } from "@ionic/storage"
 import style from "./css/EditToDo.module.css"
 
 
@@ -26,6 +26,7 @@ export  function EditToDo() {
     const [toDos,setToDos] = useState<ToDo>(); 
     const [presentAlert] = useIonAlert(); 
     const history = useHistory();
+    const [token,setToken] = useState("");
     
    
      //can use this way or Onchange with useState
@@ -34,16 +35,35 @@ export  function EditToDo() {
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
   
-    useIonViewWillEnter(()=>{ 
-        getByIdToDo(id).then(response => {
-            setToDos(response.data)
-          }).catch(e => {
-            console.log(e)
-          })
+    
 
-          console.log(id)
-        }
-        );
+    useIonViewWillEnter(()=>{
+       
+            const initStorage = async ()=>{
+                const newStore = new Storage();
+                const store = await newStore.create()
+                await store.get("user").then(res=>{
+                  
+                  let user = JSON.parse(res);
+                  let token = user.access_token
+
+                  setToken(token);
+
+                 getByIdToDo(id,token).then(res=>{
+                    setToDos(res.data)
+                 }).catch(err=>{
+                    console.log(err)
+                 })
+    
+                 
+                }).catch(err=>{
+                    console.log(err)
+                    history.push("/login")
+                })
+                }
+                initStorage();
+        
+    })
     
     function onSubmit(event:any){
         event.preventDefault();
@@ -65,7 +85,8 @@ export  function EditToDo() {
 
         let element:ToDo={id:id,title:title,summ:summ,time:date,type:type}
            
-        putToDo(element)
+        console.log(token)
+        putToDo(element,token)
         
         AlertDone()
 
@@ -86,7 +107,7 @@ export  function EditToDo() {
             buttons: [{
                 text: 'volver',
                 handler: () => {
-                  history.push("/");
+                  history.push("/home");
                 },
               }],
           }))

@@ -1,19 +1,17 @@
 import axios from "axios";
 
-export function putPhoto(form:FormData){
-    axios({
-        method: "put",
-        withCredentials: false,
-        url: "http://localhost:8080/api/photos/"+form.get("id"),
-        data: form,
-        headers: { "Content-Type": "multipart/form-data"},
-      })
-        .then(function (response) {
-        
-        })
-        .catch(function (response) {
-          //handle error
-          console.log(response);
-        });
+export function putPhoto(form:FormData,token:string){
+    
+        var config = {
+          method: 'put',
+          url: "http://localhost:8080/api/photos/"+form.get("id"),
+          headers: {   
+              'Content-Type': 'multipart/form-data',  
+             'Authorization': 'Bearer ' + token  
+              },
+              data:form
+        };
+      
+        return(axios(config))
 
 }

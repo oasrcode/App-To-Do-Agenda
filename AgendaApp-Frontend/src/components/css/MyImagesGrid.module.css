@@ -1,4 +1,10 @@
+.photoContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
 .imgContainer{
-  height: 200px;
   background-color: black;
 }

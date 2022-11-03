@@ -10,13 +10,13 @@ module.exports = app => {
 
     router.get("/all",auth.isAuthenticated, ToDo.findAll);
     
-    router.get("/:id",ToDo.findOne);
+    router.get("/:id",auth.isAuthenticated,ToDo.findOne);
   
 
-     router.put("/:id", ToDo.update);
+     router.put("/:id",auth.isAuthenticated, ToDo.update);
   
 
-     router.delete("/:id", ToDo.delete);
+     router.delete("/:id",auth.isAuthenticated, ToDo.delete);
   
     app.use('/api', router);
   };

@@ -6,20 +6,30 @@ import { pickImage } from "../hooks/pickImage";
 import { takeImage } from "../hooks/takeImage";
 import { postPhoto } from "../Service/photos/postPhoto";
 
+import { Storage } from "@ionic/storage"
+
 import style from "./css/AddMyImages.module.css"
 
 export function AddMyImages(){
 
   const [webPath,setWebPath] = useState<any>();
- 
   const [presentAlert] = useIonAlert();
-
+  const [token,setToken] = useState("");
   const history = useHistory();
-
   const titleInput = useRef<HTMLIonInputElement>(null);
 
   useIonViewWillEnter(()=>{
     setWebPath("https://ionicframework.com/docs/img/demos/thumbnail.svg")
+    const initStorage = async ()=>{
+      const newStore = new Storage();
+      const store = await newStore.create()
+      await store.get("user").then(res=>{    
+        let user = JSON.parse(res);
+        let token = user.access_token
+        setToken(token)
+      });
+      }
+      initStorage();
   })
 
   function Alert(componente:string){
@@ -28,8 +38,6 @@ export function AddMyImages(){
         buttons: ['OK'],
       }))
 }
-
-
 
 function AlertDone(){
   return(presentAlert({
@@ -73,8 +81,11 @@ async function onSubmit(event:any){
     var bodyFormData = new FormData();
     bodyFormData.append('title', titleInput.current?.value as string);
     bodyFormData.append('file', blob); 
-  
-    postPhoto(bodyFormData);
+      
+
+    postPhoto(bodyFormData,token).catch(err=>{
+      console.log(err)
+    });
     AlertDone();
     
     
