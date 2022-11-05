@@ -2,15 +2,17 @@ import { IonBackButton, IonButton, IonButtons,
 
     IonContent, IonDatetime, IonDatetimeButton,
 
+    IonGrid,
+
     IonHeader, IonInput, IonItem, IonLabel, 
 
     IonList, 
 
-    IonModal, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter, useIonViewWillLeave} 
+    IonModal, IonNav, IonNavLink, IonPage,  IonSelect, IonSelectOption, IonTextarea, IonToolbar, useIonAlert, useIonViewWillEnter, useIonViewWillLeave} 
     from "@ionic/react";
 
 
-import {useRef, useState} from "react";
+import {useEffect, useReducer, useRef, useState} from "react";
 import { useHistory } from "react-router";
 import { ToDo, ToDoType } from "../data/ToDoContext";
 import { postToDo } from "../Service/toDos/postToDo";
@@ -23,18 +25,18 @@ export  function AddToDo() {
 
     const [presentAlert] = useIonAlert();
     const [token,setToken] = useState("")
+    const [change,setChange] = useState(false);
     
     //can use this way or Onchange with useState
     const typeInput = useRef<HTMLIonSelectElement>(null);
     const titleInput = useRef<HTMLIonInputElement>(null);
     const summInput = useRef<HTMLIonTextareaElement>(null);
     const dateTimePicker = useRef<HTMLIonDatetimeElement>(null);
-    const myForm = useRef<HTMLFormElement>()
     const history = useHistory();
 
    
 
-    useIonViewWillEnter(()=>{
+  
         const initStorage = async ()=>{
             const newStore = new Storage();
             const store = await newStore.create()
@@ -51,10 +53,28 @@ export  function AddToDo() {
                
             })
             }
-            initStorage();
-    })
+           
+   
 
-    
+    useEffect(()=>{
+        initStorage();
+        ResetInputs()
+       
+    },[change])
+
+    function ResetInputs(){
+        if(titleInput.current){
+            titleInput.current.value="";
+        }
+        if(typeInput.current){
+            typeInput.current.value=undefined;
+        }
+       if(summInput.current){
+        summInput.current.value="";
+
+       }
+
+    }
     
 
     function Alert(componente:string){
@@ -72,7 +92,7 @@ export  function AddToDo() {
                   text: 'volver',
                   handler: () => {
                     history.push("/home");
-                    myForm.current?.reset()
+                    setChange(!change)
                   },
                 },
               ],
@@ -114,9 +134,10 @@ export  function AddToDo() {
     return(<IonPage>
         <IonHeader>
         <IonToolbar  color="tertiary">
-            <IonButtons slot="start" color="tertiary">
+            <IonButtons onClick={ ()=>setChange(!change)} slot="start" color="tertiary">
                 <IonBackButton text="volver"  defaultHref="/home" />
             </IonButtons>
+           
          </IonToolbar>
         </IonHeader>
         <IonContent>

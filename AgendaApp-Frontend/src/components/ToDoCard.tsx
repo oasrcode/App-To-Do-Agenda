@@ -1,6 +1,6 @@
 import { IonCard, IonCardContent, IonCardHeader, 
   IonCardSubtitle, IonCardTitle, IonIcon, IonImg, 
-  IonItem, IonLabel, useIonAlert, useIonViewWillEnter } from "@ionic/react";
+  IonItem, IonLabel, useIonAlert} from "@ionic/react";
 
 import imgHobby from "../images/hobby.jpg";
 import imgTask from "../images/task.jpg";
@@ -23,32 +23,23 @@ export function ToDoCard({props}:{props:ToDoProps}){
   const [token,setToken] = useState("");
   const history = useHistory();
 
-  useEffect(()=>{
-    const initStorage = async ()=>{
-      const newStore = new Storage();
-      const store = await newStore.create()
-      await store.get("user").then(res=>{
-        
-        let user = JSON.parse(res);
-        let token = user.access_token
+  const initStorage = async ()=>{
+    const newStore = new Storage();
+    const store = await newStore.create()
+    await store.get("user").then(res=>{
+      let user = JSON.parse(res);
+      let token = user.access_token
+      setToken(token);
+    }).catch(err=>{
+        console.log(err)
+        history.push("/login")
+    })
+    }
 
-        setToken(token);
-
-      
-
-       
-      }).catch(err=>{
-          console.log(err)
-          history.push("/login")
-      })
-      }
-      initStorage();
-  },[])
-       
-   
-
-
-  
+    useEffect(()=>{
+      initStorage()
+    },[])
+    
   switch (props.element.type) {
       case "task":
       img=imgTask;
@@ -67,12 +58,8 @@ export function ToDoCard({props}:{props:ToDoProps}){
   }
     function deleteElement(){
       let id:string = props.element.id as string;
-
-      console.log(token)
       deleteToDo(id,token)
-      
-      props.setChange(id+token)//trick to reload grid
-      
+      props.initStorageAndFetch()
     }
 
 

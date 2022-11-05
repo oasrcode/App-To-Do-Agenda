@@ -1,8 +1,7 @@
 
-import { IonActionSheet, IonAlert, IonCol, IonContent, IonGrid, IonImg, IonItem, IonLabel, IonRow, useIonViewDidEnter, useIonViewWillEnter} from "@ionic/react";
-import { randomInt } from "crypto";
+import { IonActionSheet, IonAlert, IonCol, IonContent, IonGrid, IonImg, IonItem, IonLabel, IonRow, useIonViewWillEnter} from "@ionic/react";
 import { pencil, trash } from "ionicons/icons";
-import {  useEffect,useState } from "react";
+import React, {useEffect, useState } from "react";
 
 import { useHistory } from "react-router";
 import { MyImages } from "../data/ImageContext";
@@ -18,55 +17,63 @@ export function MyImagesGrid(){
     const [optionSheet,setOptionSheet] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [imageID,setImageID] = useState("");
-    const [change,setChange] = useState("");
     const [token,setToken] = useState("");
     const history = useHistory();
+    
+    const initStorageAndFetch = async ()=>{
+      const newStore = new Storage();
+      const store = await newStore.create()
+      await store.get("user").then(res=>{    
+        let user = JSON.parse(res);
+        let token = user.access_token
+        setToken(token);
+        getAllPhotos(token).then(response => {
+          setImages(response.data)
+         
+        }).catch(e => {
+          console.log(e)
+        })
+      }).catch(err=>{
+          history.push("/login")
 
-    useEffect(()=>{
-      const initStorage = async ()=>{
-        const newStore = new Storage();
-        const store = await newStore.create()
-        await store.get("user").then(res=>{    
-          let user = JSON.parse(res);
-          let token = user.access_token
-          setToken(token);
-          getAllPhotos(token).then(response => {
-            setImages(response.data)
-           
-          }).catch(e => {
-            console.log(e)
-          })
-        }).catch(err=>{
-            history.push("/login")
-        });
-        }
-        initStorage(); 
-        setChange("")
+          
+      });
+      }
+  
+   
+      useEffect(()=>{
+        initStorageAndFetch();  
+      },[images])
 
-    },[,change])
+      useIonViewWillEnter(()=>{
+        initStorageAndFetch();
+      })
 
    
     return(
     <IonContent>
         <IonGrid>
             <IonRow>
-            <IonCol>
+            <IonCol>   
                 {     
                     images.map
                     ((e:MyImages,key:any)=>
                         {
-                        return (    
-                           
-                              <div key={key} className={style.photoContainer}>
+                          
+                          
+                        return ( 
+                        
+                              <div key={e.id} className={style.photoContainer}>
                               <IonImg className={style.imgContainer}  alt={"imagen de "+e.title} src={"http://localhost:8080/images/"+e.filename}
                                 onClick={()=>{setOptionSheet(true) ; setImageID(e.id)}}></IonImg>
-                               <IonItem no-lines color={"tertiary"}><IonLabel>{e.title}</IonLabel></IonItem>
-                              </div>                  
+                               <IonLabel className={style.titleLabel}>{e.title}</IonLabel>
+                              </div>  
+                                           
                         )
                         }
                     )
                 }
-                </IonCol>
+                </IonCol>   
             </IonRow>
         </IonGrid>
        
@@ -88,10 +95,9 @@ export function MyImagesGrid(){
             handler: () => {
             deletePhoto(imageID,token).catch(err=>{
               console.log(err)
+              initStorageAndFetch()
             });
-            setChange(imageID+token)
                 
-
             },
           },
         ]}
