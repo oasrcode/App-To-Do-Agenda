@@ -10,4 +10,6 @@ export function postUser(user:User){
     .catch(err=>{
        console.log(err)
     })
+
+    
 }

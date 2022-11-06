@@ -14,6 +14,7 @@ export function ToDoGrid(){
   
     const [toDos,setToDos] = useState<ToDo[]>([]);
     const newStore = new Storage();
+    const [refresh,setRefresh] = useState(true)
 
     const initStorageAndFetch = async ()=>{
 
@@ -27,7 +28,6 @@ export function ToDoGrid(){
 
         setToDos([]);
         setToDos(res.data)
-
         })
 
         .catch(err=>{
@@ -39,8 +39,9 @@ export function ToDoGrid(){
     
   
       useEffect(()=>{
+        console.log("refresh")
         initStorageAndFetch();
-      },[toDos])
+      },[refresh])
 
       useIonViewWillEnter(()=>{
         initStorageAndFetch();
@@ -58,8 +59,8 @@ export function ToDoGrid(){
                         {
                           
                         let element = e;
-                        // const prop :ToDoProps={element,setChange,change};
-                        const prop :ToDoProps={element,initStorageAndFetch};
+                         const prop :ToDoProps={element,setRefresh,refresh};
+                        
 
                         return <ToDoCard ion-align-self-center  key={e.id} props={prop} />
                         }

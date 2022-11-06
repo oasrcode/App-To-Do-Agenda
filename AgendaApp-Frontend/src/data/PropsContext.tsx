@@ -2,7 +2,7 @@ import { ToDo } from "./ToDoContext";
 
 export interface ToDoProps{
     element: ToDo;
-    // setChange: (val: boolean) => void;
-    // change:boolean|undefined  
-    initStorageAndFetch:()=>Promise<void>
+     setRefresh: (val: boolean) => void;
+     refresh:boolean|undefined  
+    
 }

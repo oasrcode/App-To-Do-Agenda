@@ -59,7 +59,7 @@ export function ToDoCard({props}:{props:ToDoProps}){
     function deleteElement(){
       let id:string = props.element.id as string;
       deleteToDo(id,token)
-      props.initStorageAndFetch()
+      props.setRefresh(!props.refresh)
     }
 
 

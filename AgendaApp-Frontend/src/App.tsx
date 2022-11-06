@@ -26,7 +26,6 @@ import { EditMyImages } from './pages/EditMyImages';
 import { AddMyImages } from './pages/AddMyImages';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
-
 setupIonicReact();
 
 const App: React.FC = () => (

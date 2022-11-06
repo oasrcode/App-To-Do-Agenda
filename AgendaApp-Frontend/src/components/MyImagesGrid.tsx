@@ -19,7 +19,9 @@ export function MyImagesGrid(){
     const [imageID,setImageID] = useState("");
     const [token,setToken] = useState("");
     const history = useHistory();
-    
+    const [refresh,setRefresh] = useState(true)
+
+
     const initStorageAndFetch = async ()=>{
       const newStore = new Storage();
       const store = await newStore.create()
@@ -43,7 +45,7 @@ export function MyImagesGrid(){
    
       useEffect(()=>{
         initStorageAndFetch();  
-      },[images])
+      },[refresh])
 
       useIonViewWillEnter(()=>{
         initStorageAndFetch();
@@ -95,8 +97,9 @@ export function MyImagesGrid(){
             handler: () => {
             deletePhoto(imageID,token).catch(err=>{
               console.log(err)
-              initStorageAndFetch()
+             
             });
+            setRefresh(!refresh)
                 
             },
           },
