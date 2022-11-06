@@ -10,7 +10,7 @@
 
 ### Intro
 ***
-To-Do/Agenda App allow us to create cards with our schelude.
+To-Do/Agenda App lets us create cards with our schelude and, also, you can save your photos.
 
 ### Technologies
 ***
