@@ -180,9 +180,13 @@ export function EditMyImages(){
       return( 
         <IonPage>
           <IonHeader>
-            <IonToolbar>
-              <IonButtons slot="start" title="volver"><IonBackButton>volver</IonBackButton></IonButtons>
-            </IonToolbar>
+          <IonHeader>
+          <IonToolbar  color="tertiary">
+              <IonButtons slot="start" color="tertiary">
+                  <IonBackButton text="volver"  defaultHref="/myimages" />
+              </IonButtons>
+          </IonToolbar>
+        </IonHeader>
           </IonHeader>
             <IonContent>
          

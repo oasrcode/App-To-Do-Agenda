@@ -98,7 +98,7 @@ async function onSubmit(event:any){
           <IonHeader>
           <IonToolbar  color="tertiary">
               <IonButtons slot="start" color="tertiary">
-                  <IonBackButton text="volver"  defaultHref="/" />
+                  <IonBackButton text="volver"  defaultHref="/myimages" />
               </IonButtons>
           </IonToolbar>
         </IonHeader>
