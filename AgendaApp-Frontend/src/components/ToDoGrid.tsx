@@ -2,7 +2,7 @@ import { IonCol, IonGrid,IonRow, useIonViewWillEnter} from "@ionic/react";
 import { useEffect, useState } from "react";
 import { ToDo } from "../data/ToDoContext";
 import { ToDoCard } from "./ToDoCard"
-import  style  from "../pages/css/Home.module.css"
+import  style  from "./css/TodoGrid.module.css"
 import { getAllToDo } from "../Service/toDos/getAllToDo";
 import { ToDoProps } from "../data/PropsContext";
 import { Storage } from "@ionic/storage"

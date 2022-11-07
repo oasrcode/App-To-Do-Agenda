@@ -8,7 +8,7 @@ import { MyImagesGrid } from "../components/MyImagesGrid";
 export function MyImages(){
 
     return(
-    <IonPage>
+    <IonPage >
         <IonHeader>
           <IonToolbar color={"tertiary"}>
             <IonButtons slot="start" color="tertiary">
@@ -17,7 +17,7 @@ export function MyImages(){
             <IonButton fill="outline"  color={"light"} slot="end" routerLink="/addimage"><IonIcon icon={cameraOutline}></IonIcon></IonButton>  
           </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen> 
+        <IonContent fullscreen > 
         <MyImagesGrid/> 
         </IonContent>
       </IonPage>);

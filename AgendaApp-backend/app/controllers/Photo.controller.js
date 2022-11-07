@@ -28,7 +28,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Todo."
+          err.message || "Some error occurred while creating the Photo."
       });
     });
 };
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving portraits."
+            err.message || "Some error occurred while retrieving Photo."
         });
       });
 };
@@ -56,13 +56,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find a portrait with id=${id}.`
+          message: `Cannot find a Photo with id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving ToDo with id=" + id
+        message: "Error retrieving Photo with id=" + id
       });
     });
 };
@@ -88,17 +88,17 @@ let photo = {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully."
+          message: "Photo was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+          message: `Cannot update Photo with id=${id}. Maybe Photo was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: "Error updating Photo with id=" + id
       });
     });
 };
@@ -112,17 +112,17 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Portrait was deleted successfully!"
+          message: "Photo was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete a portrait with id=${id}. Maybe ToDo was not found!`
+          message: `Cannot delete a Photo with id=${id}. Maybe ToDo was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete ToDo with id=" + id
+        message: "Could not delete Photo with id=" + id
       });
     });
 };

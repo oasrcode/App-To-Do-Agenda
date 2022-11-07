@@ -1,11 +1,7 @@
 import axios from "axios";
 import { UserSignIn } from "../../data/UserContext";
 
-
-
-
 export function Signin(userSigin:UserSignIn){
-
 
     function getOptions(user: UserSignIn){
         let base64UserAndPassword = window.btoa(user.username + ":" + user.password);
