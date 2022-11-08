@@ -17,9 +17,9 @@ export function AddMyImages(){
   const [token,setToken] = useState("");
   const history = useHistory();
   const titleInput = useRef<HTMLIonInputElement>(null);
-
+  const defaultImage = "https://ionicframework.com/docs/img/demos/thumbnail.svg";
   useIonViewWillEnter(()=>{
-    setWebPath("https://ionicframework.com/docs/img/demos/thumbnail.svg")
+    setWebPath(defaultImage)
     const initStorage = async ()=>{
       const newStore = new Storage();
       const store = await newStore.create()
@@ -72,7 +72,7 @@ async function onSubmit(event:any){
     let title  = titleInput.current?.value as string;
     if(title===""){
       Alert("el título")
-    }else if(webPath==null){
+    }else if(webPath===defaultImage){
       Alert("la imagen")
     }else{
       let blob = null;

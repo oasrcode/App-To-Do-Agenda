@@ -39,7 +39,6 @@ export function ToDoGrid(){
     
   
       useEffect(()=>{
-        console.log("refresh")
         initStorageAndFetch();
       },[refresh])
 

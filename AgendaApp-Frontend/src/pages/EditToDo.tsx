@@ -73,21 +73,18 @@ export  function EditToDo() {
         let date =  dateTimePicker.current?.value as string 
         let type = typeInput.current?.value as ToDoType
 
-        if(type === undefined){
+        if(type === undefined || type === null ){
             Alert("el tipo")
         }else if(title === ""){
             Alert("el título")
         }else if(summ === ""){
             Alert("la descripción")
-        }else if(date === undefined){
+        }else if(date === undefined || date === null){
             Alert("la fecha y la hora")
         }else{
 
         let element:ToDo={id:id,title:title,summ:summ,time:date,type:type}
-           
-        console.log(token)
         putToDo(element,token)
-        
         AlertDone()
 
         }
@@ -103,7 +100,7 @@ export  function EditToDo() {
     
     function AlertDone(){
         return(presentAlert({
-            header: 'Editado!!!',
+            header: 'ToDo modificado',
             buttons: [{
                 text: 'volver',
                 handler: () => {

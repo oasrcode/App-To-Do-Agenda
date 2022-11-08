@@ -117,36 +117,34 @@ export function EditMyImages(){
   
   function AlertDone(){
     return(presentAlert({
-        header: 'Añadido a la galería personal',
+        header: 'Contenido editado',
         buttons:  [{
           text: 'volver',
           handler: () => {
-           
             history.push("/myimages");
           },
         }],
       }))
+    }
     
-  }
   
   async function onSubmit(event:any){ 
+
     event.preventDefault();
     let title  = titleInput.current?.value as string;
     if(title===""){
       Alert("el título")
     }
 
-
     var bodyFormData = new FormData();
-    if(webPath==null){
 
-     
+    if(webPath==null){
+ 
       bodyFormData.append('id',id);
       bodyFormData.append('title', titleInput.current?.value as string);
       bodyFormData.append('updateImage','false') 
-      
       putPhoto(bodyFormData,token).then(res=>{
-          console.log(res)
+          
       }).catch(err=>{
         console.log(err)
       })
@@ -155,24 +153,20 @@ export function EditMyImages(){
 
     }else{
     
-    
     let blob=null;
     const response = await fetch(webPath);
     blob = await response.blob();
-
-  
-
     bodyFormData.append('id',id);
     bodyFormData.append('title', titleInput.current?.value as string);
     bodyFormData.append('updateImage','true')
     bodyFormData.append('file', blob); 
     putPhoto(bodyFormData,token).then(res=>{
-      console.log(res)
+ 
   }).catch(err=>{
     console.log(err)
   })
   AlertDone()
-    AlertDone()
+  
     }
     
    }

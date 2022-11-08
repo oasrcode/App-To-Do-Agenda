@@ -67,14 +67,14 @@ export  function AddToDo() {
             titleInput.current.value="";
         }
         if(typeInput.current){
-            typeInput.current.value=null;
+            typeInput.current.value=undefined;
         }
        if(summInput.current){
         summInput.current.value="";
 
        }
        if(dateTimePicker.current){
-        dateTimePicker.current.value=null
+        dateTimePicker.current.value=undefined
        }
 
     }
