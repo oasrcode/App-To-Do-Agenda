@@ -43,6 +43,9 @@ Open a new terminal to run the backend
 npm install
 
 ```
+
+:alert: In the root of the backend you must create a folder public and inside other named images to store photo
+
 #### Install ionic node_modules
 
 Same with the frontend
