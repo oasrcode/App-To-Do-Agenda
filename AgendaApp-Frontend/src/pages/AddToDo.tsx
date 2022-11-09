@@ -125,7 +125,7 @@ export  function AddToDo() {
                    
             let element:ToDo={id:null,title:title,summ:summ,time:date,type:type}
 
-            console.log(token +"  :token")
+           
             postToDo(element,token)
   
    
